@@ -1,0 +1,13 @@
+用brew装docker比较省心
+
+装完oracle远程配置文件很难找，最后也没用上（我白眼呢？）
+/u01/app/oracle/product/11.2.0/xe/network/admin/tnsnames.ora
+
+优秀的netlink创建语句，需要dba权限，真是帮了大忙 => https://blog.csdn.net/aiynmimi/article/details/52857732
+create public database link #{link名} connect to #{数据库登录名} identified by #{密码} using '(DESCRIPTION =(ADDRESS_LIST =(ADDRESS =(PROTOCOL = TCP)(HOST = xxx.xx.x.xxx)(PORT = 1521)))(CONNECT_DATA =(SERVICE_NAME = #{远程服务名})))';
+
+导出的语句写的简单点比较好
+expdp system/oracle network_link=#{link名} dumpfile=#{输出的文件名.dmp} schemas=#{导出的数据库名}
+
+copy导出的数据文件
+docker cp oracle:/u01/app/oracle/admin/XE/dpdump/2019091204.dmp /Users/oushisei/Downloads
